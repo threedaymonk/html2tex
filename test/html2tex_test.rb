@@ -1,0 +1,99 @@
+# encoding: UTF-8
+$KCODE = 'u' unless "1.9".respond_to?(:encoding)
+
+$:.unshift File.expand_path("../../lib", __FILE__)
+require "html2tex"
+require "test/unit"
+require "shoulda"
+
+class HTML2TeXTest < Test::Unit::TestCase
+
+  def assert_converted(expected, input)
+    actual = HTML2TeX.new(input).to_tex.strip
+    assert_equal expected.strip, actual
+  end
+
+  should 'collapse space within paragraphs' do
+    input    = "<p>test text\n\nin a paragraph</p>"
+    expected = "test text in a paragraph"
+    assert_converted expected, input
+  end
+
+  should 'convert paragraphs to double line breaks' do
+    input    = "<p>para 1</p><p>para 2</p>"
+    expected = "para 1\n\npara 2"
+    assert_converted expected, input
+  end
+
+  should 'convert <br> to \\' do
+    assert_converted "foo bar \\\\ baz", "foo bar\n<br>\nbaz"
+  end
+
+  should 'centre * * * or ***' do
+    assert_converted "\\begin{center}\n***\n\\end{center}", "* * *"
+    assert_converted "\\begin{center}\n***\n\\end{center}", "***"
+  end
+
+  context 'when processing text' do
+    should 'convert <i> to \textit' do
+      assert_converted "\\textit{foo}", "<i>foo</i>"
+    end
+
+    should 'convert <em> to \textit' do
+      assert_converted "\\textit{foo}", "<em>foo</em>"
+    end
+
+    should 'convert <b> to \textbf' do
+      assert_converted "\\textbf{foo}", "<b>foo</b>"
+    end
+
+    should 'convert <strong> to \textbf' do
+      assert_converted "\\textbf{foo}", "<strong>foo</strong>"
+    end
+
+    should 'convert HTML entities' do
+      assert_converted "é", "&eacute;"
+    end
+
+    should 'escape TeX markup' do
+      assert_converted "\\&", "&"
+    end
+
+    should 'put in nice quotes' do
+      assert_converted "“hello”",       '"hello"'
+      assert_converted "‘hello’",       "'hello'"
+      assert_converted "it’s",          "it's"
+      assert_converted "O’Shaughnessy", "O'Shaughnessy"
+    end
+  end
+
+  context 'when processing headings' do
+    should 'convert <h1> to \part' do
+      assert_converted "\\part*{foo}", "<h1>foo</h1>"
+    end
+
+    should 'convert <h2> to \chapter' do
+      assert_converted "\\chapter*{foo}", "<h2>foo</h2>"
+    end
+
+    should 'convert <h3> to \section' do
+      assert_converted "\\section*{foo}", "<h3>foo</h3>"
+    end
+
+    should 'convert <h4> to \subsection' do
+      assert_converted "\\subsection*{foo}", "<h4>foo</h4>"
+    end
+
+    should 'ignore case' do
+      assert_converted "\\chapter*{foo}\n\nblah blah", "<h2>foo</H2>\nblah blah"
+    end
+
+    should 'ignore markup' do
+      assert_converted "\\chapter*{foo bar}", "<h2>foo <i>bar</i></h2>"
+    end
+
+    should 'skip empty elements' do
+      assert_converted "", "<h2><br></h2>"
+    end
+  end
+end

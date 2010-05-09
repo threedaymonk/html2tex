@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require "html2tex"
+
+File.open(ARGV[1], "w") do |output|
+  HTML2TeX.new(File.read(ARGV[0])).to_tex(output)
+end
