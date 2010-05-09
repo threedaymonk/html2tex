@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "shoulda"
 
-  s.files        = Dir["{bin,lib}/**/*"] + %w(README.md)
+  s.files        = Dir["{bin,lib}/**/*"] + %w[README.md COPYING]
   s.executables  = ['html2tex']
   s.require_path = 'lib'
 end
