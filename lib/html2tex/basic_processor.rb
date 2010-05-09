@@ -32,7 +32,7 @@ class HTML2TeX
     end
 
     def text(s)
-      tex_escape(@decoder.decode(RubyPants.new(s).to_html))
+      tex_escape(@decoder.decode(RubyPants.new(@decoder.decode(s)).to_html))
     end
 
     def tex_escape(s)

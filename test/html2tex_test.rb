@@ -67,6 +67,13 @@ class HTML2TeXTest < Test::Unit::TestCase
       assert_converted "it’s",          "it's"
       assert_converted "O’Shaughnessy", "O'Shaughnessy"
     end
+
+    should 'unescape quotes before converting to nice quotes' do
+      assert_converted "“hello”",       '&quot;hello&quot;'
+      assert_converted "‘hello’",       "&apos;hello&apos;"
+      assert_converted "it’s",          "it&apos;s"
+      assert_converted "O’Shaughnessy", "O&apos;Shaughnessy"
+    end
   end
 
   context 'when processing headings' do
