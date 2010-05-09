@@ -59,3 +59,22 @@ comprehensive.
 StringScanner is used to process the HTML, but cannot read from a stream
 directly, so the entire input document must be read into memory as a string
 first.
+
+UTF-8 is assumed everywhere; other character encodings will produce odd
+results. If the HTML file to be processed is not in UTF-8 encoding with unix
+line endings (at least, on Linux/OS X/etc.), _fix that first_. The usual
+suspects will help here:
+
+    iconv -f windows-1252 -t utf-8 < somefile-win1252.html > somefile-utf8.html
+    dos2unix somefile-utf8.html
+
+Next steps
+----------
+
+If you have XeLaTex, you can easily turn the generated `.tex` file into a PDF:
+
+    xelatex my-book.tex
+
+For better results, tweak the font settings or use a custom class like [this][ebook.cls].
+
+[ebook.cls]: http://github.com/threedaymonk/gutenberg2pdf/blob/master/ebook.cls
