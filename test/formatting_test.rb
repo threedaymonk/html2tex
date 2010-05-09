@@ -8,7 +8,7 @@ require "html2tex"
 require "test/unit"
 require "shoulda"
 
-class HTML2TeXTest < Test::Unit::TestCase
+class FormattingTest < Test::Unit::TestCase
 
   def assert_converted(expected, input)
     actual = HTML2TeX.new(input).to_tex.strip

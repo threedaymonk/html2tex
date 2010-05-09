@@ -9,8 +9,9 @@ class HTML2TeX
       super(scanner)
     end
 
-    def to_tex(*args)
-      wrap(super(*args))
+    def to_tex(buffer="")
+      buffer << wrap(super(""))
+      buffer
     end
 
   private
