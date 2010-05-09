@@ -1,7 +1,9 @@
 # encoding: UTF-8
 $KCODE = 'u' unless "1.9".respond_to?(:encoding)
 
-$:.unshift File.expand_path("../../lib", __FILE__)
+lib = File.expand_path("../../lib", __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
 require "html2tex"
 require "test/unit"
 require "shoulda"
