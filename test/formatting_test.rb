@@ -11,7 +11,7 @@ require "shoulda"
 class FormattingTest < Test::Unit::TestCase
 
   def assert_converted(expected, input)
-    actual = HTML2TeX.new(input).to_tex.strip
+    actual = HTML2TeX.new(input, :document => false).to_tex.strip
     assert_equal expected.strip, actual
   end
 

@@ -4,9 +4,9 @@ class HTML2TeX
   class HeadingProcessor < BasicProcessor
     HEADINGS = %w[part chapter section subsection subsubsection]
 
-    def initialize(scanner, label)
+    def initialize(scanner, label, options)
       @label = label
-      super(scanner)
+      super(scanner, options)
     end
 
     def to_tex(buffer="")

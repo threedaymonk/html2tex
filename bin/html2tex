@@ -1,6 +1,39 @@
 #!/usr/bin/env ruby
 require "html2tex"
+require "optparse"
 
-File.open(ARGV[1], "w") do |output|
-  HTML2TeX.new(File.read(ARGV[0])).to_tex(output)
+options = {}
+optparser = OptionParser.new{ |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options] input.html [output.tex]"
+
+  opts.on "-t", "--title TITLE",
+          "Set (or override) the title of the document" do |title|
+    options[:title] = title
+  end
+  opts.on "-a", "--author AUTHOR",
+          "Set (or override) the author of the document" do |author|
+    options[:author] = author
+  end
+  opts.on "-c", "--document-class CLASS",
+          "Set the LaTeX document class to be used; default is book" do |klass|
+    options[:class] = klass
+  end
+
+  opts.on "-h", "--help",
+          "Display this screen" do
+    puts opts
+    exit
+  end
+}
+optparser.parse!
+
+unless input = ARGV[0]
+  puts optparser
+  exit 1
+end
+
+output = ARGV[1] || input.sub(/\.[^\.]+$|$/, ".tex")
+
+File.open(output, "w") do |io|
+  HTML2TeX.new(File.read(input), options).to_tex(io)
 end

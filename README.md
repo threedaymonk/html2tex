@@ -5,6 +5,22 @@ This is a simple library and command-line tool to convert HTML documents into
 LaTeX. The intended use is for preparing ebooks, but it might also be useful
 for other purposes.
 
+Command-line use
+----------------
+
+    Usage: html2tex [options] input.html [output.tex]
+        -t, --title TITLE                Set (or override) the title of the document
+        -a, --author AUTHOR              Set (or override) the author of the document
+        -c, --document-class CLASS       Set the LaTeX document class to be used; default is book
+        -h, --help                       Display this screen
+
+If the output file is not specified, the program will create an output file
+based on the input filename, replacing the extension with `.tex` – or, if there
+is no extension, by appending `.tex`.
+
+The title and author will, by default, be extracted from the HTML document,
+using either Dublin Core metadata or the HTML title and an author META element.
+
 Library use
 -----------
 
@@ -18,10 +34,14 @@ Library use
       HTML2TeX.new(html).to_tex(f)
     end
 
-Command-line use
-----------------
+A hash of options can be supplied as the second argument to `to_tex`; the
+available keys are:
 
-    html2tex source.html destination.tex
+* `:author`
+* `:title`
+* `:class`
+
+See the command-line section above for an explanation of these.
 
 Dependencies
 ------------

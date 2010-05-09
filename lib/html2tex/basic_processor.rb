@@ -1,10 +1,15 @@
+require "html2tex/tex"
+
 class HTML2TeX
   class BasicProcessor
-    attr_reader :scanner
+    include TeX
 
-    def initialize(scanner)
+    attr_reader :scanner, :options
+
+    def initialize(scanner, options)
       @decoder = HTMLEntities.new
       @scanner = scanner
+      @options = options
     end
 
     def to_tex(buffer="")
@@ -35,11 +40,6 @@ class HTML2TeX
       tex_escape(@decoder.decode(RubyPants.new(@decoder.decode(s)).to_html))
     end
 
-    def tex_escape(s)
-      return nil if s.nil?
-      s.gsub(/[\\{}$&#%^_~]/, '\\\\\\0')
-    end
-
     def whitespace
       if @squash_next
         @squash_next = false
@@ -65,7 +65,7 @@ class HTML2TeX
         "\\\\"
       when /^h\d/
         @squash_next = true
-        HeadingProcessor.new(scanner, t).to_tex + "\n\n"
+        HeadingProcessor.new(scanner, t, @options).to_tex + "\n\n"
       else
         ""
       end
