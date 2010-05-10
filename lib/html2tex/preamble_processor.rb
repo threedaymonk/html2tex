@@ -21,6 +21,7 @@ class HTML2TeX
   private
     def read_html_head
       scanner.scan %r{\s*}
+      scanner.scan %r{<\?xml[^>]*?\?>\s*}i
       scanner.scan %r{<!doctype[^>]*>\s*}i
       scanner.scan %r{<html[^>]*>\s*}i
       if head = scanner.scan(%r{<head[^>]*>.*?</head>}im)
