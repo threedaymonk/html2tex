@@ -61,6 +61,12 @@ class HTML2TeX
         "\\textbf{"
       when "/em", "/i", "/strong", "/b"
         "}"
+      when "sup"
+        "$^{\\textrm{"
+      when "sub"
+        "$_{\\textrm{"
+      when "/sup", "/sub"
+        "}}$"
       when "br"
         "\\\\"
       when /^h\d/

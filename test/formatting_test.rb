@@ -58,7 +58,7 @@ class FormattingTest < Test::Unit::TestCase
     end
 
     should 'escape TeX markup' do
-      assert_converted "\\&", "&"
+      assert_converted "\\&\\$", "&$"
     end
 
     should 'put in nice quotes' do
@@ -73,6 +73,14 @@ class FormattingTest < Test::Unit::TestCase
       assert_converted "‘hello’",       "&apos;hello&apos;"
       assert_converted "it’s",          "it&apos;s"
       assert_converted "O’Shaughnessy", "O&apos;Shaughnessy"
+    end
+
+    should 'convert superscripts' do
+      assert_converted "on the 21$^{\\textrm{st}}$ floor", "on the 21<sup>st</sup> floor"
+    end
+
+    should 'convert subscripts' do
+      assert_converted "atmospheric CO$_{\\textrm{2}}$ levels", "atmospheric CO<sub>2</sub> levels"
     end
   end
 
