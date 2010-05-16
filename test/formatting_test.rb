@@ -82,6 +82,16 @@ class FormattingTest < Test::Unit::TestCase
     should 'convert subscripts' do
       assert_converted "atmospheric CO$_{\\textrm{2}}$ levels", "atmospheric CO<sub>2</sub> levels"
     end
+
+    should 'convert numbered lists' do
+      assert_converted "\\begin{enumerate}\n\\item Foo\n\\item Bar\n\\end{enumerate}",
+                       "<ol><li>Foo</li><li>Bar</li></ol>"
+    end
+
+    should 'convert bulletted lists' do
+      assert_converted "\\begin{itemize}\n\\item Foo\n\\item Bar\n\\end{itemize}",
+                       "<ul><li>Foo</li><li>Bar</li></ul>"
+    end
   end
 
   context 'when processing headings' do

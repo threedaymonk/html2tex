@@ -69,6 +69,18 @@ class HTML2TeX
         "}}$"
       when "br"
         "\\\\"
+      when "ol"
+        "\\begin{enumerate}\n"
+      when "/ol"
+        "\\end{enumerate}\n"
+      when "ul"
+        "\\begin{itemize}\n"
+      when "/ul"
+        "\\end{itemize}\n"
+      when "li"
+        "\\item "
+      when "/li"
+        "\n"
       when /^h\d/
         @squash_next = true
         HeadingProcessor.new(scanner, t, @options).to_tex + "\n\n"
