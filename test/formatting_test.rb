@@ -61,6 +61,10 @@ class FormattingTest < Test::Unit::TestCase
       assert_converted "\\&\\$", "&$"
     end
 
+    should 'escape backslashes' do
+      assert_converted "\\textbackslash\\", "\\"
+    end
+
     should 'put in nice quotes' do
       assert_converted "“hello”",       '"hello"'
       assert_converted "‘hello’",       "'hello'"

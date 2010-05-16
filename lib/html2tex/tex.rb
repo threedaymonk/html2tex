@@ -8,7 +8,8 @@ class HTML2TeX
 
     def tex_escape(s)
       return nil if s.nil?
-      s.gsub(/[\\{}$&#%^_~]/, '\\\\\\0')
+      s.gsub(/\\/, "\\\\textbackslash\\").
+        gsub(/[{}$&#%^_~]/, '\\\\\\0')
     end
   end
 end
