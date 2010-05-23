@@ -41,6 +41,11 @@ class FormattingTest < Test::Unit::TestCase
     assert_converted "foo  bar", "foo #{javascript} bar"
   end
 
+  should 'remove HTML comments' do
+    comment = "<!-- Comment <em>with</em> HTML -->"
+    assert_converted "foo  bar", "foo #{comment} bar"
+  end
+
   context 'when processing text' do
     should 'convert <i> to \textit' do
       assert_converted "\\textit{foo}", "<i>foo</i>"

@@ -23,7 +23,7 @@ class HTML2TeX
     def next_element
       if scanner.eos?
         nil
-      elsif s = scanner.scan(/<[^>]+>/)
+      elsif s = scanner.scan(/<!--|<[^>]+>/)
         tag(s[/<([^>\s]+)/, 1].downcase)
       elsif scanner.scan(/\s+/)
         whitespace
@@ -96,6 +96,8 @@ class HTML2TeX
         HeadingProcessor.new(scanner, t, @options).to_tex + "\n\n"
       when "script"
         NullProcessor.new(scanner, "</script>", @options).to_tex
+      when "!--"
+        NullProcessor.new(scanner, "-->", @options).to_tex
       else
         ""
       end
