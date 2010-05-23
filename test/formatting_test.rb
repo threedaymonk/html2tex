@@ -57,8 +57,10 @@ class FormattingTest < Test::Unit::TestCase
       assert_converted "é", "&eacute;"
     end
 
-    should 'escape TeX markup' do
-      assert_converted "\\&\\$", "&$"
+    %w[ # $ % & ~ _ ^ { } ].each do |special_character|
+      should "escape #{special_character}" do
+        assert_converted "foo\\#{special_character}bar", "foo#{special_character}bar"
+      end
     end
 
     should 'escape backslashes' do
