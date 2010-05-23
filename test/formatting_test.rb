@@ -36,6 +36,11 @@ class FormattingTest < Test::Unit::TestCase
     assert_converted "\\begin{center}\n***\n\\end{center}", "***"
   end
 
+  should 'remove JavaScript' do
+    javascript = %{<script type="text/javascript">/*<![CDATA[*/\nvar foo = null;\n/*]]>*/</script>}
+    assert_converted "foo  bar", "foo #{javascript} bar"
+  end
+
   context 'when processing text' do
     should 'convert <i> to \textit' do
       assert_converted "\\textit{foo}", "<i>foo</i>"
