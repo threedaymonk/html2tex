@@ -96,6 +96,11 @@ class FormattingTest < Test::Unit::TestCase
       assert_converted "\\begin{itemize}\n\\item Foo\n\\item Bar\n\\end{itemize}",
                        "<ul><li>Foo</li><li>Bar</li></ul>"
     end
+
+    should 'convert definition lists' do
+      assert_converted "\\begin{description}\n\\item[Foo] bar\n\\item[Baz] quux\n\\end{description}",
+                       "<dl><dt>Foo</dt><dd>bar</dd><dt>Baz</dt><dd>quux</dd></dl>"
+    end
   end
 
   context 'when processing headings' do
