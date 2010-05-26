@@ -48,7 +48,7 @@ class HTML2TeX
           return data
         else
           key = s.scan(/[^=]+/).downcase
-          s.scan(/=/)
+          s.scan(/=\s*/)
         end
 
         if s.scan(/"/)
