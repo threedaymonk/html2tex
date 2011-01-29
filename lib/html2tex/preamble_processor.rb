@@ -1,5 +1,4 @@
 require "html2tex/basic_processor"
-require "nokogiri"
 
 class HTML2TeX
   class PreambleProcessor < BasicProcessor
