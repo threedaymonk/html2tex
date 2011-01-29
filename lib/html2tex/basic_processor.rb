@@ -94,8 +94,8 @@ class HTML2TeX
       when /^h\d/
         @squash_next = true
         HeadingProcessor.new(scanner, t, @options).to_tex + "\n\n"
-      when "script"
-        NullProcessor.new(scanner, "</script>", @options).to_tex
+      when "script", "style"
+        NullProcessor.new(scanner, "</#{t}>", @options).to_tex
       when "!--"
         NullProcessor.new(scanner, "-->", @options).to_tex
       else

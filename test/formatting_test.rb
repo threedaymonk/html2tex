@@ -41,6 +41,11 @@ class FormattingTest < Test::Unit::TestCase
     assert_converted "foo  bar", "foo #{javascript} bar"
   end
 
+  should 'remove CSS' do
+    css = %[<style type="text/css">\n@page { margin-bottom: 5.000000pt; margin-top: 5.000000pt; }\n</style>]
+    assert_converted "foo  bar", "foo #{css} bar"
+  end
+
   should 'remove HTML comments' do
     comment = "<!-- Comment <em>with</em> HTML -->"
     assert_converted "foo  bar", "foo #{comment} bar"
