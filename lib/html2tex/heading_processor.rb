@@ -11,7 +11,6 @@ class HTML2TeX
 
     def to_tex(buffer="")
       buffer << wrap(super(""))
-      buffer
     end
 
   private
