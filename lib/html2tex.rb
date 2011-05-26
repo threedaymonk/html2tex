@@ -1,3 +1,4 @@
+require "strscan"
 require "htmlentities"
 require "rubypants"
 require "html2tex/version"
